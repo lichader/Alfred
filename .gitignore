@@ -3,6 +3,15 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# IntelliJ
+*.iml
+.idea
+.gradle
+build/
+
+# OSX files
+.DS_Store
+
 # Package Files #
 *.jar
 *.war
