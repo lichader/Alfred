@@ -2,6 +2,7 @@ package com.lichader.alfred.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lichader.alfred.service.model.RouteTypesResponse;
+import com.lichader.alfred.service.model.RoutesResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -27,7 +28,8 @@ public class MetroService {
     public final static String HASH_ALGORITHM = "HmacSHA1";
     public final static String API_BASE_URL = "http://timetableapi.ptv.vic.gov.au";
     public final static String API_VERSION = "v3";
-    public final static String API_RESOURCE_ROUTE_TYPE = "route_types";
+    public final static String RESOURCE_ROUTE_TYPES = "route_types";
+    public final static String RESOURCE_ROUTES = "routes";
 
     public MetroService() {
         System.out.println("Metro Service is starting.");
@@ -40,7 +42,7 @@ public class MetroService {
     public RouteTypesResponse getRouteTypes() throws Exception{
         OkHttpClient client = new OkHttpClient();
 
-        String routeTypeUrl = buildURL(API_BASE_URL, API_VERSION, API_RESOURCE_ROUTE_TYPE);
+        String routeTypeUrl = buildURL(API_BASE_URL, API_VERSION, RESOURCE_ROUTE_TYPES);
         Request request = new Request.Builder().url(routeTypeUrl).build();
 
         Response response = client.newCall(request).execute();
@@ -49,6 +51,20 @@ public class MetroService {
 
         ObjectMapper mapper = new ObjectMapper();
         RouteTypesResponse typed =  mapper.readValue(jsonString, RouteTypesResponse.class);
+
+        return typed;
+    }
+
+    public RoutesResponse getRoutes() throws Exception{
+        OkHttpClient client = new OkHttpClient();
+
+        String routesUrl = buildURL(API_BASE_URL, API_VERSION, RESOURCE_ROUTES);
+        Request request = new Request.Builder().url(routesUrl).build();
+        Response response = client.newCall(request).execute();
+        String jsonString = response.body().string();
+
+        ObjectMapper mapper = new ObjectMapper();
+        RoutesResponse typed = mapper.readValue(jsonString, RoutesResponse.class);
 
         return typed;
     }

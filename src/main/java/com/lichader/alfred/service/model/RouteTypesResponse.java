@@ -1,9 +1,7 @@
 package com.lichader.alfred.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import okhttp3.Route;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +30,5 @@ public class RouteTypesResponse {
         public int Code;
     }
 
-    public static class VersionInfo{
-        @JsonProperty("version")
-        public String Version;
 
-        @JsonProperty("health")
-        public int Health;
-    }
 }

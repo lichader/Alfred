@@ -2,6 +2,7 @@ package com.lichader.test.alfred.metro;
 
 import com.lichader.alfred.service.MetroService;
 import com.lichader.alfred.service.model.RouteTypesResponse;
+import com.lichader.alfred.service.model.RoutesResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class MetroServiceTest {
 
         try {
             String signature = subject.calculateSignature(MetroService.API_VERSION,
-                    MetroService.API_RESOURCE_ROUTE_TYPE);
+                    MetroService.RESOURCE_ROUTE_TYPES);
 
             Assert.assertEquals("AF2BEA0811A8720B70959FF93F1CB296545AD358", signature);
         } catch (Exception ex){
@@ -33,6 +34,18 @@ public class MetroServiceTest {
             Assert.assertNotNull(response.RouteTypes);
             Assert.assertEquals(5, response.RouteTypes.size());
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetRoutes(){
+        try {
+            RoutesResponse response = subject.getRoutes();
+
+            Assert.assertTrue(!response.Routes.isEmpty());
+
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
