@@ -17,3 +17,8 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8.1'
 }
 
+test {
+    systemProperty "metro.api.devid", System.getenv("METRO_API_ID")
+    systemProperty "metro.api.key", System.getenv("METRO_API_KEY")
+}
+
