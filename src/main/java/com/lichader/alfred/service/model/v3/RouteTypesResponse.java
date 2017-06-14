@@ -1,4 +1,4 @@
-package com.lichader.alfred.service.model;
+package com.lichader.alfred.service.model.v3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,21 +14,6 @@ public class RouteTypesResponse {
     public List<RouteType> RouteTypes;
 
     @JsonProperty("status")
-    public VersionInfo Status;
-
-    public RouteTypesResponse(){
-        RouteTypes = new ArrayList<RouteType>();
-    }
-
-
-    public static class RouteType{
-
-        @JsonProperty("route_type_name")
-        public String Name;
-
-        @JsonProperty("route_type")
-        public int Code;
-    }
-
+    public com.lichader.alfred.service.model.v3.Status Status;
 
 }

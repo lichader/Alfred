@@ -1,8 +1,9 @@
 package com.lichader.alfred.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lichader.alfred.service.model.RouteTypesResponse;
-import com.lichader.alfred.service.model.RoutesResponse;
+import com.lichader.alfred.service.model.v3.DisruptionsResponse;
+import com.lichader.alfred.service.model.v3.RouteTypesResponse;
+import com.lichader.alfred.service.model.v3.RouteResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,10 +31,9 @@ public class MetroService {
     public final static String API_VERSION = "v3";
     public final static String RESOURCE_ROUTE_TYPES = "route_types";
     public final static String RESOURCE_ROUTES = "routes";
+    public final static String RESOURCE_ALL_DISRUPTIONS = "disruptions";
 
     public MetroService() {
-        System.out.println("Metro Service is starting.");
-
         DEVELOPER_ID = Integer.valueOf(System.getProperty(PROP_METRO_DEV_ID));
         API_KEY = System.getProperty(PROP_METRO_KEY);
     }
@@ -55,7 +55,7 @@ public class MetroService {
         return typed;
     }
 
-    public RoutesResponse getRoutes() throws Exception{
+    public RouteResponse getRoutes() throws Exception{
         OkHttpClient client = new OkHttpClient();
 
         String routesUrl = buildURL(API_BASE_URL, API_VERSION, RESOURCE_ROUTES);
@@ -64,7 +64,21 @@ public class MetroService {
         String jsonString = response.body().string();
 
         ObjectMapper mapper = new ObjectMapper();
-        RoutesResponse typed = mapper.readValue(jsonString, RoutesResponse.class);
+        RouteResponse typed = mapper.readValue(jsonString, RouteResponse.class);
+
+        return typed;
+    }
+
+    public DisruptionsResponse getAllDisruptions() throws Exception{
+        OkHttpClient client = new OkHttpClient();
+
+        String disruptionUrl = buildURL(API_BASE_URL, API_VERSION, RESOURCE_ALL_DISRUPTIONS);
+        Request request = new Request.Builder().url(disruptionUrl).build();
+        Response response = client.newCall(request).execute();
+        String jsonString = response.body().string();
+
+        ObjectMapper mapper = new ObjectMapper();
+        DisruptionsResponse typed = mapper.readValue(jsonString, DisruptionsResponse.class);
 
         return typed;
     }

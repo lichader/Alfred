@@ -1,8 +1,10 @@
 package com.lichader.test.alfred.metro;
 
 import com.lichader.alfred.service.MetroService;
-import com.lichader.alfred.service.model.RouteTypesResponse;
-import com.lichader.alfred.service.model.RoutesResponse;
+import com.lichader.alfred.service.model.v3.Disruption;
+import com.lichader.alfred.service.model.v3.DisruptionsResponse;
+import com.lichader.alfred.service.model.v3.RouteTypesResponse;
+import com.lichader.alfred.service.model.v3.RouteResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,10 +43,21 @@ public class MetroServiceTest {
     @Test
     public void testGetRoutes(){
         try {
-            RoutesResponse response = subject.getRoutes();
+            RouteResponse response = subject.getRoutes();
 
             Assert.assertTrue(!response.Routes.isEmpty());
 
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetDisruptions(){
+        try {
+            DisruptionsResponse response = subject.getAllDisruptions();
+
+            Assert.assertTrue(!response.disruptions.MetroTrain.isEmpty());
         } catch (Exception e){
             e.printStackTrace();
         }
