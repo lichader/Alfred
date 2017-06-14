@@ -1,10 +1,10 @@
 package com.lichader.test.alfred.metro;
 
-import com.lichader.alfred.service.MetroService;
-import com.lichader.alfred.service.model.v3.Disruption;
-import com.lichader.alfred.service.model.v3.DisruptionsResponse;
-import com.lichader.alfred.service.model.v3.RouteTypesResponse;
-import com.lichader.alfred.service.model.v3.RouteResponse;
+import com.lichader.alfred.metroapi.v3.MetroService;
+import com.lichader.alfred.metroapi.v3.model.Disruption;
+import com.lichader.alfred.metroapi.v3.model.DisruptionsResponse;
+import com.lichader.alfred.metroapi.v3.model.RouteTypesResponse;
+import com.lichader.alfred.metroapi.v3.model.RouteResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -58,6 +58,16 @@ public class MetroServiceTest {
             DisruptionsResponse response = subject.getAllDisruptions();
 
             Assert.assertTrue(!response.disruptions.MetroTrain.isEmpty());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetAllDisruptionsOfARoute(){
+        try {
+            DisruptionsResponse respone = subject.getDisruption(8); //hurstbridge line
+            Assert.assertTrue(!respone.disruptions.MetroTrain.isEmpty());
         } catch (Exception e){
             e.printStackTrace();
         }

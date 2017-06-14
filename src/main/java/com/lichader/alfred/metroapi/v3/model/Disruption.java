@@ -1,9 +1,7 @@
-package com.lichader.alfred.service.model.v3;
+package com.lichader.alfred.metroapi.v3.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

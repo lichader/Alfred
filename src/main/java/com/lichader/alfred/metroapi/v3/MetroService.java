@@ -1,9 +1,9 @@
-package com.lichader.alfred.service;
+package com.lichader.alfred.metroapi.v3;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lichader.alfred.service.model.v3.DisruptionsResponse;
-import com.lichader.alfred.service.model.v3.RouteTypesResponse;
-import com.lichader.alfred.service.model.v3.RouteResponse;
+import com.lichader.alfred.metroapi.v3.model.DisruptionsResponse;
+import com.lichader.alfred.metroapi.v3.model.RouteTypesResponse;
+import com.lichader.alfred.metroapi.v3.model.RouteResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,6 +32,7 @@ public class MetroService {
     public final static String RESOURCE_ROUTE_TYPES = "route_types";
     public final static String RESOURCE_ROUTES = "routes";
     public final static String RESOURCE_ALL_DISRUPTIONS = "disruptions";
+    public final static String RESOURCE_SPECIFIC_ROUTE_DISRUP = "disruptions/route/";
 
     public MetroService() {
         DEVELOPER_ID = Integer.valueOf(System.getProperty(PROP_METRO_DEV_ID));
@@ -73,6 +74,21 @@ public class MetroService {
         OkHttpClient client = new OkHttpClient();
 
         String disruptionUrl = buildURL(API_BASE_URL, API_VERSION, RESOURCE_ALL_DISRUPTIONS);
+        Request request = new Request.Builder().url(disruptionUrl).build();
+        Response response = client.newCall(request).execute();
+        String jsonString = response.body().string();
+
+        ObjectMapper mapper = new ObjectMapper();
+        DisruptionsResponse typed = mapper.readValue(jsonString, DisruptionsResponse.class);
+
+        return typed;
+    }
+
+    public DisruptionsResponse getDisruption(int routeId) throws Exception{
+        OkHttpClient client = new OkHttpClient();
+
+        String resource = RESOURCE_SPECIFIC_ROUTE_DISRUP + routeId;
+        String disruptionUrl = buildURL(API_BASE_URL, API_VERSION, resource);
         Request request = new Request.Builder().url(disruptionUrl).build();
         Response response = client.newCall(request).execute();
         String jsonString = response.body().string();

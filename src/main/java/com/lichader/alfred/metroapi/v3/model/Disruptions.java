@@ -1,4 +1,4 @@
-package com.lichader.alfred.service.model.v3;
+package com.lichader.alfred.metroapi.v3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

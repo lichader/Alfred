@@ -1,13 +1,14 @@
-package com.lichader.alfred.service.model.v3;
+package com.lichader.alfred.metroapi.v3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by lichader on 14/6/17.
  */
-public class Route {
+public class DisruptionRoute {
+
     @JsonProperty("route_type")
-    public String RouteType;
+    public int Routetype;
 
     @JsonProperty("route_id")
     public int RouteId;
@@ -17,4 +18,7 @@ public class Route {
 
     @JsonProperty("route_number")
     public String RouteNumber;
+
+    @JsonProperty("direction")
+    public DisruptionDirection Direction;
 }

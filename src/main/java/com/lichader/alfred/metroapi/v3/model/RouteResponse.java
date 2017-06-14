@@ -1,4 +1,4 @@
-package com.lichader.alfred.service.model.v3;
+package com.lichader.alfred.metroapi.v3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,7 +14,7 @@ public class RouteResponse {
     public List<Route> Routes;
 
     @JsonProperty("status")
-    public com.lichader.alfred.service.model.v3.Status Status;
+    public com.lichader.alfred.metroapi.v3.model.Status Status;
 
     public RouteResponse(){
         Routes = new ArrayList<Route>();
