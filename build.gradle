@@ -18,7 +18,7 @@ dependencies {
 }
 
 test {
-    systemProperty "metro.api.devid", System.getenv("METRO_API_ID")
-    systemProperty "metro.api.key", System.getenv("METRO_API_KEY")
+    systemProperty "metro.api.devid", System.getProperty("metro.api.devid")
+    systemProperty "metro.api.key", System.getProperty("metro.api.key")
 }
 
