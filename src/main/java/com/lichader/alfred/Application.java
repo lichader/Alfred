@@ -61,6 +61,7 @@ public class Application implements CommandLineRunner {
                 System.out.println(dis.DisruptionType);
                 System.out.println("from " + dis.FromDate + " to " + dis.ToDate);
                 System.out.println("###########################");
+                System.out.println();
             }
         }
     }
