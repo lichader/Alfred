@@ -16,4 +16,10 @@ Run test in IntelliJ:
 - Find the target under "Default" section and add the arguments
 
 Run test in gradle:
-e.g. gradle build %ARGS%
+e.g. gradle build %PROPS%
+
+After build, run the jar 
+e.g. java -Dmetro.api.devid=xxx -Dmetro.api.key=xxx -jar build/libs/%JAR%
+
+Note: put the properties before **-jar** as if you put the property declarations after the jar file, it will be recognised as program args
+
