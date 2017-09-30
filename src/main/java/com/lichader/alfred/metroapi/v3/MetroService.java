@@ -7,6 +7,7 @@ import com.lichader.alfred.metroapi.v3.model.RouteResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
@@ -20,12 +21,6 @@ import java.security.NoSuchAlgorithmException;
  */
 @Service
 public class MetroService {
-
-    private final String PROP_METRO_DEV_ID = "metro.api.devid";
-    private final String PROP_METRO_KEY = "metro.api.key";
-
-    private final int DEVELOPER_ID;
-    private final String API_KEY;
     public final static String HASH_ALGORITHM = "HmacSHA1";
     public final static String API_BASE_URL = "http://timetableapi.ptv.vic.gov.au";
     public final static String API_VERSION = "v3";
@@ -34,9 +29,13 @@ public class MetroService {
     public final static String RESOURCE_ALL_DISRUPTIONS = "disruptions";
     public final static String RESOURCE_SPECIFIC_ROUTE_DISRUP = "disruptions/route/";
 
+    @Value("${metro.api.devid}")
+    private String apiDeveloperId;
+
+    @Value("${metro.api.key}")
+    private String apiKey;
+
     public MetroService() {
-        DEVELOPER_ID = Integer.valueOf(System.getProperty(PROP_METRO_DEV_ID));
-        API_KEY = System.getProperty(PROP_METRO_KEY);
     }
 
 
@@ -110,7 +109,7 @@ public class MetroService {
                         append(version).append("/").
                         append(resource).
                         append(resource.contains("?") ? "&" : "?").
-                        append("devid=" + DEVELOPER_ID).
+                        append("devid=" + apiDeveloperId).
                         append("&signature=" + signature.toString().toUpperCase());
 
         return url.toString();
@@ -123,9 +122,9 @@ public class MetroService {
                 append(version).append("/").
                 append(resource).
                 append(resource.contains("?") ? "&" : "?").
-                append("devid=" + DEVELOPER_ID);
+                append("devid=" + apiDeveloperId);
 
-        byte[] keyBytes = API_KEY.getBytes();
+        byte[] keyBytes = apiKey.getBytes();
         byte[] uriBytes = uriWithDeveloperID.toString().getBytes();
         Key signingKey = new SecretKeySpec(keyBytes, HASH_ALGORITHM);
         Mac mac = Mac.getInstance(HASH_ALGORITHM);
