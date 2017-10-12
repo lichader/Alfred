@@ -1,7 +1,11 @@
 package com.lichader.alfred;
 
+import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.MetroService;
+import com.lichader.alfred.metroapi.v3.RouteService;
+import com.lichader.alfred.metroapi.v3.RouteTypeService;
 import com.lichader.alfred.metroapi.v3.model.*;
+import com.lichader.alfred.slack.MessageBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +24,17 @@ import java.util.Optional;
 public class Application implements CommandLineRunner{
 
     @Autowired
-    private MetroService metroService;
+    private RouteService routeService;
+
+    @Autowired
+    private RouteTypeService routeTypeService;
+
+    @Autowired
+    private DisruptionService disruptionService;
+
+    @Autowired
+    private MessageBot messageBot;
+
 
     public static void main (String[] args){
         SpringApplication app = new SpringApplication(Application.class);
@@ -30,40 +45,22 @@ public class Application implements CommandLineRunner{
     public void run(String... args) throws Exception {
         System.out.println("Application is starting");
 
-        RouteTypesResponse allTypes = metroService.getRouteTypes();
-
-        Optional<RouteType> possibleTrainType = allTypes.RouteTypes
-                                    .stream()
-                                    .filter(o -> o.Name.equalsIgnoreCase("Train"))
-                                    .findFirst();
-
-        if (!possibleTrainType.isPresent()){
-            throw new RuntimeException("Can't find train route type");
-        }
-
-        RouteType  trainType = possibleTrainType.get();
-
-        RouteResponse allRoutes = metroService.getRoutes();
-
+        RouteResponse allRoutes = routeService.getAll();
         Route hurstbridgeRoute = allRoutes.Routes
                                 .stream()
                                 .filter(o -> o.RouteName.equalsIgnoreCase("Hurstbridge")).findFirst().get();
+        DisruptionsResponse allDisruptions = disruptionService.getDisruption(hurstbridgeRoute.RouteId);
 
-        DisruptionsResponse allDisruptions = metroService.getDisruption(hurstbridgeRoute.RouteId);
+        List<Disruption> disruptions = allDisruptions.disruptions.MetroTrain;
 
-        if (!allDisruptions.disruptions.MetroTrain.isEmpty()){
-            List<Disruption> disruptions = allDisruptions.disruptions.MetroTrain;
+        for (Disruption dis : disruptions){
+            StringBuilder sb = new StringBuilder();
+            sb.append("Disruption: ").append(dis.Description).append("\n");
+            sb.append("Status: ").append(dis.DisruptionStatus).append("\n");
+            sb.append("Type: ").append(dis.DisruptionType).append("\n");
+            sb.append("From " + dis.FromDate + " to " + dis.ToDate);
 
-            for (Disruption dis : disruptions){
-                System.out.println("###########################");
-                System.out.println("Disruption: ");
-                System.out.println(dis.Description);
-                System.out.println(dis.DisruptionStatus);
-                System.out.println(dis.DisruptionType);
-                System.out.println("from " + dis.FromDate + " to " + dis.ToDate);
-                System.out.println("###########################");
-                System.out.println();
-            }
+            messageBot.send(sb.toString());
         }
     }
 }
