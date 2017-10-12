@@ -23,6 +23,8 @@ import java.util.Optional;
 @SpringBootApplication
 public class Application implements CommandLineRunner{
 
+    private static final String LINE_BREAK = "%0A"; // url encoded \n
+
     @Autowired
     private RouteService routeService;
 
@@ -55,9 +57,9 @@ public class Application implements CommandLineRunner{
 
         for (Disruption dis : disruptions){
             StringBuilder sb = new StringBuilder();
-            sb.append("Disruption: ").append(dis.Description).append("\n");
-            sb.append("Status: ").append(dis.DisruptionStatus).append("\n");
-            sb.append("Type: ").append(dis.DisruptionType).append("\n");
+            sb.append("Disruption: ").append(dis.Description).append(LINE_BREAK);
+            sb.append("Status: ").append(dis.DisruptionStatus).append(LINE_BREAK);
+            sb.append("Type: ").append(dis.DisruptionType).append(LINE_BREAK);
             sb.append("From " + dis.FromDate + " to " + dis.ToDate);
 
             messageBot.send(sb.toString());
