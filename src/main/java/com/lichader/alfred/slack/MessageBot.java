@@ -12,7 +12,7 @@ import java.io.IOException;
 public class MessageBot {
 
     @Autowired
-    private SlackWebAPIURLBuilder urlBuilder;
+    private SlackAPIURLBuilder urlBuilder;
 
     public void send(String text){
 

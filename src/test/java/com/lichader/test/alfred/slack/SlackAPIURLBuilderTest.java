@@ -1,20 +1,20 @@
 package com.lichader.test.alfred.slack;
 
-import com.lichader.alfred.slack.SlackWebAPIURLBuilder;
+import com.lichader.alfred.slack.SlackAPIURLBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class SlackWebAPIURLBuilderTest {
+public class SlackAPIURLBuilderTest {
 
     private String slackPostMessageURL = "https://slack.com/api/chat.postMessage";
     private String token = "dummy";
     private String channel = "general";
     private String text = "Hello World";
 
-    private SlackWebAPIURLBuilder subject;
+    private SlackAPIURLBuilder subject;
 
-    public SlackWebAPIURLBuilderTest() {
-        subject = new SlackWebAPIURLBuilder();
+    public SlackAPIURLBuilderTest() {
+        subject = new SlackAPIURLBuilder();
         subject.setPostMessageUrl(slackPostMessageURL);
         subject.setToken(token);
         subject.setChannel(channel);
