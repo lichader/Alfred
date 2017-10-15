@@ -1,29 +1,19 @@
 package com.lichader.test.alfred.metro;
 
-import com.lichader.alfred.metroapi.v3.MetroService;
 import com.lichader.alfred.metroapi.v3.MetroServiceURLBuilder;
 import com.lichader.alfred.metroapi.v3.RouteTypeService;
-import com.lichader.alfred.metroapi.v3.model.DisruptionsResponse;
-import com.lichader.alfred.metroapi.v3.model.RouteTypesResponse;
-import com.lichader.alfred.metroapi.v3.model.RouteResponse;
-import com.lichader.test.alfred.IntegrationTest;
-import com.lichader.test.alfred.IntegrationTestApplication;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by lichader on 11/5/17.
  */
 
-public class MetroServiceTest {
+public class MetroServiceURLBuilderTest {
 
     private MetroServiceURLBuilder subject;
 
-    public MetroServiceTest(){
+    public MetroServiceURLBuilderTest(){
         subject = new MetroServiceURLBuilder();
         subject.setApiDeveloperId("9423423");
         subject.setApiKey("ajdlajflsadjflsadj");

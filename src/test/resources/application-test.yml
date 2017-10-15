@@ -1,3 +1,6 @@
+spring:
+  profiles: test
+
 metro:
   api:
     devid: dummy
