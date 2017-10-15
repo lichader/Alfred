@@ -34,6 +34,7 @@ public class MetroAlfred {
 
     // Runs in the mid night of every day
     @Scheduled(cron = "0 0 12 1/1 * ? *")
+//    @Scheduled(fixedRate = 5000)
     public void checkDisruption(){
         RouteResponse allRoutes = routeService.getAll();
         Route hurstbridgeRoute = allRoutes.Routes
