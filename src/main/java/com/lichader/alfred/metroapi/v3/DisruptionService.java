@@ -16,7 +16,7 @@ public class DisruptionService extends MetroService{
     }
 
 
-    public DisruptionsResponse getDisruption(int routeId) throws Exception{
+    public DisruptionsResponse getDisruption(int routeId){
         String resource = RESOURCE_SPECIFIC_ROUTE_DISRUP + routeId;
         return getResource(resource, DisruptionsResponse.class);
     }
