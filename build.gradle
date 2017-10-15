@@ -27,7 +27,20 @@ dependencies {
 }
 
 test {
+    exclude 'com/lichader/test/alfred/integration/**'
+    testLogging {
+        events "PASSED", "STARTED", "FAILED", "SKIPPED"
+    }
 }
+
+task allTest (type: Test) {
+    test {
+        testLogging {
+            events "PASSED", "STARTED", "FAILED", "SKIPPED"
+        }
+    }
+}
+
 
 jar {
     manifest {

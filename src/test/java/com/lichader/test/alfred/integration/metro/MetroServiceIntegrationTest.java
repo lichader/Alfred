@@ -1,10 +1,12 @@
-package com.lichader.test.alfred.metro;
+package com.lichader.test.alfred.integration.metro;
 
 import com.lichader.alfred.type.MetroAlfred;
-import com.lichader.test.alfred.IntegrationTest;
+import com.lichader.test.alfred.integration.IntegrationTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Category(IntegrationTest.class)
 public class MetroServiceIntegrationTest extends IntegrationTest{
 
     @Autowired
