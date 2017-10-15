@@ -1,0 +1,10 @@
+metro:
+  api:
+    devid: dummy
+    key: dummy
+
+slack:
+  token: dummy
+  postMessage:
+    url: https://slack.com/api/chat.postMessage
+    channel: dummy
