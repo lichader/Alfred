@@ -8,6 +8,8 @@ import com.lichader.alfred.metroapi.v3.model.DisruptionsResponse;
 import com.lichader.alfred.metroapi.v3.model.Route;
 import com.lichader.alfred.metroapi.v3.model.RouteResponse;
 import com.lichader.alfred.slack.MessageBot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Component
 public class MetroAlfred {
+    private final Logger logger = LoggerFactory.getLogger(MetroAlfred.class);
 
     private static final String LINE_BREAK = "%0A"; // url encoded \n
 
@@ -33,9 +36,12 @@ public class MetroAlfred {
 
 
     // Runs in the mid night of every day
-    @Scheduled(cron = "0 0 0 * * *")
-//    @Scheduled(fixedRate = 5000)
+//    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedRate = 5000)
     public void checkDisruption(){
+        logger.info("Start checking disruption");
+
+
         RouteResponse allRoutes = routeService.getAll();
         Route hurstbridgeRoute = allRoutes.Routes
                 .stream()
