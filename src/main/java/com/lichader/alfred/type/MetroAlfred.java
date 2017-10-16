@@ -36,8 +36,8 @@ public class MetroAlfred {
 
 
     // Runs in the mid night of every day
-//    @Scheduled(cron = "0 0 0 * * *")
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(fixedRate = 5000)
     public void checkDisruption(){
         logger.info("Start checking disruption");
 
