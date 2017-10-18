@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public abstract class MetroService {
@@ -45,7 +46,7 @@ public abstract class MetroService {
             logger.error("Received an error while retrieving resource: " + resourceName, ex);
 
             // print exception here
-            return null;
+            return Optional.empty();
         }
 
     }
