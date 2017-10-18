@@ -5,6 +5,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -43,11 +44,9 @@ task allTest (type: Test) {
 
 
 jar {
-    manifest {
-        attributes(
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'com.lichader.alfred.Application'
-        )
+    jar {
+        baseName = 'alfred'
+        version =  '0.1.0'
     }
 }
 
@@ -57,5 +56,24 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2.1'
+}
+
+
+group = "lichader"
+
+task buildDocker(type: Docker, dependsOn: build) {
+    applicationName = jar.baseName
+    dockerfile = file('Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into "${stageDir}/target"
+        }
     }
 }
