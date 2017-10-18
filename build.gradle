@@ -1,6 +1,5 @@
-group 'Alfred'
+group 'alfred'
 version '0.1'
-
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -27,12 +26,37 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
 }
 
+
+jar {
+    jar {
+        baseName = 'alfred'
+        version = 'latest'
+    }
+}
+
+buildscript {
+    ext {
+        springBootVersion     = "1.5.3.RELEASE"
+        gradleDockerVersion   = "1.2"
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:${gradleDockerVersion}")
+    }
+}
+
+
+
 test {
     exclude 'com/lichader/test/alfred/integration/**'
     testLogging {
         events "PASSED", "STARTED", "FAILED", "SKIPPED"
     }
 }
+
 
 task allTest (type: Test) {
     test {
@@ -43,30 +67,12 @@ task allTest (type: Test) {
 }
 
 
-jar {
-    jar {
-        baseName = 'alfred'
-        version =  '0.1.0'
-    }
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
-        classpath('se.transmode.gradle:gradle-docker:1.2')
-    }
-}
-
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2.1'
 }
 
 
-group = "lichader"
-
+group 'lichader'
 task buildDocker(type: Docker, dependsOn: build) {
     applicationName = jar.baseName
     dockerfile = file('Dockerfile')

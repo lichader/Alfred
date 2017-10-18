@@ -8,18 +8,10 @@ TODO: need to set system properties in JVM arguments
 
 API secrets are passed via system properties and you need to add it into the run target in IDE or gradle command
 
-**-Dmetro.api.devid=xxx -Dmetro.api.key=xxx**
+Docker:
 
-Run test in IntelliJ:
-- Run
-- Edit Configuration
-- Find the target under "Default" section and add the arguments
+```
+docker run -p 8080:8080 -v %YOUR_CONFIG_LOCATION%:/spring/config/  lichader/alfred:0.1
+```
 
-Run test in gradle:
-e.g. gradle build %PROPS%
-
-After build, run the jar 
-e.g. java -Dmetro.api.devid=xxx -Dmetro.api.key=xxx -jar build/libs/%JAR%
-
-Note: put the properties before **-jar** as if you put the property declarations after the jar file, it will be recognised as program args
-
+config location should end with a forward slash
