@@ -1,17 +1,14 @@
 # Alfred
 Do tedious things for master
 
-TODO: need to set system properties in JVM arguments
+How to:
+1. Copy the **application.yml** file in the **resources** folder and update the configuration with real values
+2. Run docker with the command below but replace **%YOUR_CONFIG_LOCATION** with the path where you paste your updated configuration file.
+Note: config location should end with a forward slash
 
-* metro.api.devid
-* metro.api.key
-
-API secrets are passed via system properties and you need to add it into the run target in IDE or gradle command
-
-Docker:
+To run the docker image:
 
 ```
 docker run -p 8080:8080 -v %YOUR_CONFIG_LOCATION%:/spring/config/  lichader/alfred:0.1
 ```
 
-config location should end with a forward slash
