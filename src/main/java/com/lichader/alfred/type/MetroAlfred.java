@@ -2,7 +2,6 @@ package com.lichader.alfred.type;
 
 import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.RouteService;
-import com.lichader.alfred.metroapi.v3.RouteTypeService;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
 import com.lichader.alfred.metroapi.v3.model.Route;
 import com.lichader.alfred.metroapi.v3.model.RouteResponse;
@@ -25,9 +24,6 @@ public class MetroAlfred {
 
     @Autowired
     private RouteService routeService;
-
-    @Autowired
-    private RouteTypeService routeTypeService;
 
     @Autowired
     private DisruptionService disruptionService;
@@ -60,6 +56,7 @@ public class MetroAlfred {
         return HURTSBRIDGE_LINE.equalsIgnoreCase(route.RouteName);
     }
 
+    // TODO: Move this out to another bean e.g. MessageContentBuilder
     private void composeAndSendDisrutpionMessage(Disruption disruption){
         StringBuilder sb = new StringBuilder();
         sb.append("Disruption: ").append(disruption.Description).append(LINE_BREAK);

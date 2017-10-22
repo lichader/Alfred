@@ -21,9 +21,8 @@ public class SlackAPIURLBuilderTest {
     }
 
     @Test
-    public void expectCorrectURL(){
+    public void buildURL_expectCorrect(){
         String actual = subject.buildMessageURL(text);
-
         Assert.assertEquals("https://slack.com/api/chat.postMessage?token=dummy&channel=general&as_user=true&text=Hello World", actual);
     }
 }

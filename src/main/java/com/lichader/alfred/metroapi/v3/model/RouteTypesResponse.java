@@ -2,6 +2,7 @@ package com.lichader.alfred.metroapi.v3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,4 +16,7 @@ public class RouteTypesResponse {
     @JsonProperty("status")
     public com.lichader.alfred.metroapi.v3.model.Status Status;
 
+    public RouteTypesResponse(){
+        RouteTypes = new ArrayList<>();
+    }
 }

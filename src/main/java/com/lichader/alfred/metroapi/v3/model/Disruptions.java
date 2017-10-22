@@ -2,6 +2,7 @@ package com.lichader.alfred.metroapi.v3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,4 +31,13 @@ public class Disruptions {
     @JsonProperty("regional_bus")
     public List<Disruption> RegionalBus;
 
+    public Disruptions(){
+        General = new ArrayList<>();
+        MetroTrain = new ArrayList<>();
+        MetroTram = new ArrayList<>();
+        MetroBus = new ArrayList<>();
+        RegionalTrain = new ArrayList<>();
+        RegionalCoach = new ArrayList<>();
+        RegionalBus = new ArrayList<>();
+    }
 }

@@ -11,4 +11,9 @@ public class DisruptionsResponse {
 
     @JsonProperty("status")
     public Status status;
+
+
+    public DisruptionsResponse(){
+        disruptions = new Disruptions();
+    }
 }

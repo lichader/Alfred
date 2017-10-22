@@ -20,8 +20,7 @@ public class MetroServiceURLBuilderTest {
     }
 
     @Test
-    public void testCalculateSignature(){
-
+    public void calculateSignature_expectCorrect(){
         try {
             String signature = subject.calculateSignature(RouteTypeService.RESOURCE_ROUTE_TYPES);
             Assert.assertEquals("AE1CB78FD7AA80885803B1B3CBFC126A53325972", signature);

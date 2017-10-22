@@ -12,7 +12,7 @@ public class DisruptionService extends MetroService{
    public final static String RESOURCE_SPECIFIC_ROUTE_DISRUP = "disruptions/route/";
 
 
-    public Optional<DisruptionsResponse> getAll() throws Exception{
+    public Optional<DisruptionsResponse> getAll() {
         return getResource(RESOURCE_ALL_DISRUPTIONS, DisruptionsResponse.class);
 
     }
