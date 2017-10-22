@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
+@TestPropertySource(properties = "advanceDaysToCheck=3")
 public class MetroAlfredTest extends AbstractSpringBootTestBase{
 
     @MockBean
@@ -38,7 +40,7 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
         given(this.disruptionService.getDisruption(1)).willReturn(Optional.of(mockDisruptions()));
 
         metroAlfred.checkDisruption();
-        then(this.messageBot).should(times(2)).send(Mockito.anyString());
+        then(this.messageBot).should(times(1)).send(Mockito.anyString());
     }
 
     private RouteResponse mockRoutes(){
@@ -67,28 +69,40 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
 
         disruptionsResponse.disruptions = new Disruptions();
 
-        Disruption disruption1 = new Disruption();
-        disruption1.DisruptionId = 1;
-        disruption1.Description = "Test disruption 1";
-        disruption1.DisruptionStatus = "planned";
-        disruption1.DisruptionType = "test";
-        disruption1.PublishedOn = LocalDate.now();
-        disruption1.LastUpdated = LocalDate.now();
-        disruption1.FromDate = LocalDate.now().plusDays(4);
-        disruption1.ToDate = LocalDate.now().plusDays(11);
+        Disruption inTheFuture = new Disruption();
+        inTheFuture.DisruptionId = 1;
+        inTheFuture.Description = "Test disruption 1";
+        inTheFuture.DisruptionStatus = "planned";
+        inTheFuture.DisruptionType = "test";
+        inTheFuture.PublishedOn = LocalDate.now();
+        inTheFuture.LastUpdated = LocalDate.now();
+        inTheFuture.FromDate = LocalDate.now().plusDays(4);
+        inTheFuture.ToDate = LocalDate.now().plusDays(11);
 
-        disruptionsResponse.disruptions.MetroTrain.add(disruption1);
+        disruptionsResponse.disruptions.MetroTrain.add(inTheFuture);
 
-        Disruption disruption2 = new Disruption();
-        disruption2.DisruptionId = 1;
-        disruption2.Description = "Test disruption 1";
-        disruption2.DisruptionStatus = "planned";
-        disruption2.DisruptionType = "test";
-        disruption2.PublishedOn = LocalDate.now();
-        disruption2.LastUpdated = LocalDate.now();
-        disruption2.FromDate = LocalDate.now();
-        disruption2.ToDate = LocalDate.now().plusDays(14);
-        disruptionsResponse.disruptions.MetroTrain.add(disruption2);
+        Disruption almostStarted = new Disruption();
+        almostStarted.DisruptionId = 1;
+        almostStarted.Description = "Test disruption 2";
+        almostStarted.DisruptionStatus = "planned";
+        almostStarted.DisruptionType = "test";
+        almostStarted.PublishedOn = LocalDate.now();
+        almostStarted.LastUpdated = LocalDate.now();
+        almostStarted.FromDate = LocalDate.now();
+        almostStarted.ToDate = LocalDate.now().plusDays(14);
+        disruptionsResponse.disruptions.MetroTrain.add(almostStarted);
+
+        Disruption started = new Disruption();
+        started.DisruptionId = 2;
+        started.Description = "Test disruption 3";
+        started.DisruptionStatus = "Started";
+        started.DisruptionType = "test";
+        started.PublishedOn = LocalDate.now();
+        started.LastUpdated = LocalDate.now();
+        started.FromDate = LocalDate.now().minusDays(1);
+        started.ToDate = LocalDate.now().plusDays(14);
+        disruptionsResponse.disruptions.MetroTrain.add(started);
+
 
         return disruptionsResponse;
     }
@@ -99,6 +113,15 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
         given(this.disruptionService.getDisruption(1)).willReturn(Optional.empty());
 
         metroAlfred.checkDisruption();
+        then(this.messageBot).should(times(0)).send(Mockito.anyString());
+    }
+
+    @Test
+    public void checkDisruption_NoRoutesFound_ExpectMessageInvokedZeroTimes(){
+        given(this.routeService.getAll()).willReturn(Optional.empty());
+
+        metroAlfred.checkDisruption();
+        then(this.disruptionService).should(times(0)).getDisruption(Mockito.anyInt());
         then(this.messageBot).should(times(0)).send(Mockito.anyString());
     }
 }

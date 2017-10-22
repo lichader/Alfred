@@ -15,3 +15,5 @@ slack:
   postMessage:
     url: https://slack.com/api/chat.postMessage
     channel: dummy
+
+advanceDaysToCheck: 3

@@ -9,9 +9,11 @@ import com.lichader.alfred.slack.MessageBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
@@ -32,6 +34,10 @@ public class MetroAlfred {
     private MessageBot messageBot;
 
 
+    @Value("${advanceDaysToCheck}")
+    private int advancedDaysToCheck;
+
+
     @Scheduled(cron = SCHEDULE_12AM_DAILY)
 //    @Scheduled(fixedRate = 5000)
     public void checkDisruption(){
@@ -45,7 +51,7 @@ public class MetroAlfred {
                                 hurtbridgeRoute ->
                                         disruptionService.getDisruption(hurtbridgeRoute.RouteId)
                                                 .ifPresent( allDisruptions ->
-                                                        allDisruptions.disruptions.MetroTrain.forEach(this::composeAndSendDisrutpionMessage)
+                                                        allDisruptions.disruptions.MetroTrain.stream().filter(this::isDisruptionHappeningInDays).forEach(this::composeAndSendDisrutpionMessage)
                                                 )
                         )
         );
@@ -66,4 +72,18 @@ public class MetroAlfred {
 
         messageBot.send(sb.toString());
     }
+
+    private boolean isDisruptionHappeningInDays(Disruption disruption){
+        LocalDate now = LocalDate.now();
+        LocalDate fewDaysLater = now.plusDays(advancedDaysToCheck);
+
+        if (disruption.FromDate.isAfter(fewDaysLater)){
+            return false;
+        } else if (disruption.FromDate.isBefore(now)){
+            return false;
+        }
+
+        return true;
+    }
+
 }
