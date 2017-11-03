@@ -1,4 +1,4 @@
-package com.lichader.alfred.util;
+package com.lichader.alfred.controller;
 
 import com.lichader.alfred.metroapi.v3.RouteTypeService;
 import com.lichader.alfred.metroapi.v3.model.RouteTypesResponse;
