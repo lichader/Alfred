@@ -4,7 +4,7 @@ import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.RouteService;
 import com.lichader.alfred.metroapi.v3.model.*;
 import com.lichader.alfred.slack.MessageBot;
-import com.lichader.alfred.type.MetroAlfred;
+import com.lichader.alfred.servant.MetroAlfred;
 import com.lichader.test.alfred.AbstractSpringBootTestBase;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 

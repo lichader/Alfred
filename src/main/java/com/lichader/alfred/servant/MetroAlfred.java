@@ -1,5 +1,6 @@
-package com.lichader.alfred.type;
+package com.lichader.alfred.servant;
 
+import com.lichader.alfred.logic.HurtsbridgeDisruptionRetrievalLogic;
 import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.RouteService;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
@@ -21,46 +22,26 @@ public class MetroAlfred {
     private final Logger logger = LoggerFactory.getLogger(MetroAlfred.class);
 
     private static final String SCHEDULE_12AM_DAILY = "0 0 0 * * *";
-    private static final String HURTSBRIDGE_LINE = "Hurstbridge";
+
     private static final String LINE_BREAK = "%0A"; // url encoded \n
 
-    @Autowired
-    private RouteService routeService;
 
     @Autowired
-    private DisruptionService disruptionService;
+    private HurtsbridgeDisruptionRetrievalLogic logic;
 
     @Autowired
     private MessageBot messageBot;
 
 
-    @Value("${advanceDaysToCheck}")
-    private int advancedDaysToCheck;
-
 
     @Scheduled(cron = SCHEDULE_12AM_DAILY)
-//    @Scheduled(fixedRate = 5000)
     public void checkDisruption(){
         logger.info("Start checking disruption");
 
-        Optional<RouteResponse> allRoutes = routeService.getAll();
-
-        allRoutes.ifPresent(
-                o -> o.Routes.stream().filter(this::isHurtsbridgeLine).findFirst()
-                        .ifPresent(
-                                hurtbridgeRoute ->
-                                        disruptionService.getDisruption(hurtbridgeRoute.RouteId)
-                                                .ifPresent( allDisruptions ->
-                                                        allDisruptions.disruptions.MetroTrain.stream().filter(this::isDisruptionHappeningInDays).forEach(this::composeAndSendDisrutpionMessage)
-                                                )
-                        )
-        );
-
+        logic.findDisruptions().forEach(this::composeAndSendDisrutpionMessage);
     }
 
-    private boolean isHurtsbridgeLine(Route route){
-        return HURTSBRIDGE_LINE.equalsIgnoreCase(route.RouteName);
-    }
+
 
     // TODO: Move this out to another bean e.g. MessageContentBuilder
     private void composeAndSendDisrutpionMessage(Disruption disruption){
@@ -73,17 +54,6 @@ public class MetroAlfred {
         messageBot.send(sb.toString());
     }
 
-    private boolean isDisruptionHappeningInDays(Disruption disruption){
-        LocalDate now = LocalDate.now();
-        LocalDate fewDaysLater = now.plusDays(advancedDaysToCheck);
 
-        if (disruption.FromDate.toLocalDate().isAfter(fewDaysLater)){
-            return false;
-        } else if (disruption.FromDate.toLocalDate().isBefore(now)){
-            return false;
-        }
-
-        return true;
-    }
 
 }

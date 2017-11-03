@@ -1,6 +1,6 @@
 package com.lichader.test.alfred.integration.metro;
 
-import com.lichader.alfred.type.MetroAlfred;
+import com.lichader.alfred.servant.MetroAlfred;
 import com.lichader.test.alfred.AbstractSpringBootTestBase;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
