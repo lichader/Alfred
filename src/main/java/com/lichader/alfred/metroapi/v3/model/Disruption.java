@@ -1,8 +1,13 @@
 package com.lichader.alfred.metroapi.v3.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +18,7 @@ import java.util.List;
 public class Disruption {
 
     @JsonProperty("disruption_id")
-    public int DisruptionId;
+    public int Id;
 
     @JsonProperty("title")
     public String Title;
@@ -25,22 +30,22 @@ public class Disruption {
     public String Description;
 
     @JsonProperty("disruption_status")
-    public String DisruptionStatus;
+    public String Status;
 
     @JsonProperty("disruption_type")
-    public String DisruptionType;
+    public String Type;
 
     @JsonProperty("published_on")
-    public LocalDate PublishedOn;
+    public ZonedDateTime PublishedOn;
 
     @JsonProperty("last_updated")
-    public LocalDate LastUpdated;
+    public ZonedDateTime LastUpdated;
 
     @JsonProperty("from_date")
-    public LocalDate FromDate;
+    public ZonedDateTime FromDate;
 
     @JsonProperty("to_date")
-    public LocalDate ToDate;
+    public ZonedDateTime ToDate;
 
     @JsonProperty("routes")
     public List<DisruptionRoute> Routes;

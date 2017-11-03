@@ -1,6 +1,7 @@
 package com.lichader.alfred.metroapi.v3;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lichader.alfred.util.SerializationHelperFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -36,7 +37,7 @@ public abstract class MetroService {
 
             String jsonString = response.body().string();
 
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = SerializationHelperFactory.getHelper();
             T typed =  mapper.readValue(jsonString, resourceType);
 
             logger.info("Sucesfully retreived resource: {}", resourceName);

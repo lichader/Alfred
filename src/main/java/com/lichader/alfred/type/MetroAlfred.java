@@ -66,8 +66,8 @@ public class MetroAlfred {
     private void composeAndSendDisrutpionMessage(Disruption disruption){
         StringBuilder sb = new StringBuilder();
         sb.append("Disruption: ").append(disruption.Description).append(LINE_BREAK);
-        sb.append("Status: ").append(disruption.DisruptionStatus).append(LINE_BREAK);
-        sb.append("Type: ").append(disruption.DisruptionType).append(LINE_BREAK);
+        sb.append("Status: ").append(disruption.Status).append(LINE_BREAK);
+        sb.append("Type: ").append(disruption.Type).append(LINE_BREAK);
         sb.append("From " + disruption.FromDate + " to " + disruption.ToDate);
 
         messageBot.send(sb.toString());
@@ -77,9 +77,9 @@ public class MetroAlfred {
         LocalDate now = LocalDate.now();
         LocalDate fewDaysLater = now.plusDays(advancedDaysToCheck);
 
-        if (disruption.FromDate.isAfter(fewDaysLater)){
+        if (disruption.FromDate.toLocalDate().isAfter(fewDaysLater)){
             return false;
-        } else if (disruption.FromDate.isBefore(now)){
+        } else if (disruption.FromDate.toLocalDate().isBefore(now)){
             return false;
         }
 

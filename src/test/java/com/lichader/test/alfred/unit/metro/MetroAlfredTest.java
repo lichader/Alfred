@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
@@ -70,37 +71,37 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
         disruptionsResponse.disruptions = new Disruptions();
 
         Disruption inTheFuture = new Disruption();
-        inTheFuture.DisruptionId = 1;
+        inTheFuture.Id = 1;
         inTheFuture.Description = "Test disruption 1";
-        inTheFuture.DisruptionStatus = "planned";
-        inTheFuture.DisruptionType = "test";
-        inTheFuture.PublishedOn = LocalDate.now();
-        inTheFuture.LastUpdated = LocalDate.now();
-        inTheFuture.FromDate = LocalDate.now().plusDays(4);
-        inTheFuture.ToDate = LocalDate.now().plusDays(11);
+        inTheFuture.Status = "planned";
+        inTheFuture.Type = "test";
+        inTheFuture.PublishedOn = ZonedDateTime.now();
+        inTheFuture.LastUpdated = ZonedDateTime.now();
+        inTheFuture.FromDate = ZonedDateTime.now().plusDays(4);
+        inTheFuture.ToDate = ZonedDateTime.now().plusDays(11);
 
         disruptionsResponse.disruptions.MetroTrain.add(inTheFuture);
 
         Disruption almostStarted = new Disruption();
-        almostStarted.DisruptionId = 1;
+        almostStarted.Id = 1;
         almostStarted.Description = "Test disruption 2";
-        almostStarted.DisruptionStatus = "planned";
-        almostStarted.DisruptionType = "test";
-        almostStarted.PublishedOn = LocalDate.now();
-        almostStarted.LastUpdated = LocalDate.now();
-        almostStarted.FromDate = LocalDate.now();
-        almostStarted.ToDate = LocalDate.now().plusDays(14);
+        almostStarted.Status = "planned";
+        almostStarted.Type = "test";
+        almostStarted.PublishedOn = ZonedDateTime.now();
+        almostStarted.LastUpdated = ZonedDateTime.now();
+        almostStarted.FromDate = ZonedDateTime.now();
+        almostStarted.ToDate = ZonedDateTime.now().plusDays(14);
         disruptionsResponse.disruptions.MetroTrain.add(almostStarted);
 
         Disruption started = new Disruption();
-        started.DisruptionId = 2;
+        started.Id = 2;
         started.Description = "Test disruption 3";
-        started.DisruptionStatus = "Started";
-        started.DisruptionType = "test";
-        started.PublishedOn = LocalDate.now();
-        started.LastUpdated = LocalDate.now();
-        started.FromDate = LocalDate.now().minusDays(1);
-        started.ToDate = LocalDate.now().plusDays(14);
+        started.Status = "Started";
+        started.Type = "test";
+        started.PublishedOn = ZonedDateTime.now();
+        started.LastUpdated = ZonedDateTime.now();
+        started.FromDate = ZonedDateTime.now().minusDays(1);
+        started.ToDate = ZonedDateTime.now().plusDays(14);
         disruptionsResponse.disruptions.MetroTrain.add(started);
 
 
