@@ -9,6 +9,7 @@ metro:
   api:
     devid: dummy
     key: dummy
+  trainLine: South Morang
 
 slack:
   token: dummy

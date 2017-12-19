@@ -1,21 +1,13 @@
 package com.lichader.alfred.servant;
 
-import com.lichader.alfred.logic.HurtsbridgeDisruptionRetrievalLogic;
-import com.lichader.alfred.metroapi.v3.DisruptionService;
-import com.lichader.alfred.metroapi.v3.RouteService;
+import com.lichader.alfred.logic.TrainlineDisruptionRetrievalLogic;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
-import com.lichader.alfred.metroapi.v3.model.Route;
-import com.lichader.alfred.metroapi.v3.model.RouteResponse;
 import com.lichader.alfred.slack.MessageBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.Optional;
 
 @Component
 public class MetroAlfred {
@@ -27,7 +19,7 @@ public class MetroAlfred {
 
 
     @Autowired
-    private HurtsbridgeDisruptionRetrievalLogic logic;
+    private TrainlineDisruptionRetrievalLogic logic;
 
     @Autowired
     private MessageBot messageBot;

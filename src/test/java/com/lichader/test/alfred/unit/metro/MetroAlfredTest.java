@@ -19,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@TestPropertySource(properties = "advanceDaysToCheck=3")
+@TestPropertySource(properties = {"advanceDaysToCheck=3", "metro.trainLine=South Morang"})
 public class MetroAlfredTest extends AbstractSpringBootTestBase{
 
     @MockBean
@@ -34,10 +34,12 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
     @Autowired
     MetroAlfred metroAlfred;
 
+    private final static int expectedRouteId = 2;
+
     @Test
     public void checkDisruption_TwoDisruptions_ExpectTwoMessageSent(){
         given(this.routeService.getAll()).willReturn(Optional.of(mockRoutes()));
-        given(this.disruptionService.getDisruption(1)).willReturn(Optional.of(mockDisruptions()));
+        given(this.disruptionService.getDisruption(expectedRouteId)).willReturn(Optional.of(mockDisruptions()));
 
         metroAlfred.checkDisruption();
         then(this.messageBot).should(times(1)).send(Mockito.anyString());
@@ -110,7 +112,7 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
     @Test
     public void checkDisruption_NoDisruptions_ExpectMessageInvokedZeroTimes(){
         given(this.routeService.getAll()).willReturn(Optional.of(mockRoutes()));
-        given(this.disruptionService.getDisruption(1)).willReturn(Optional.empty());
+        given(this.disruptionService.getDisruption(expectedRouteId)).willReturn(Optional.empty());
 
         metroAlfred.checkDisruption();
         then(this.messageBot).should(times(0)).send(Mockito.anyString());

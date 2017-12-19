@@ -16,9 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class HurtsbridgeDisruptionRetrievalLogic {
-
-    private static final String HURTSBRIDGE_LINE = "Hurstbridge";
+public class TrainlineDisruptionRetrievalLogic {
 
     @Autowired
     private RouteService routeService;
@@ -29,6 +27,9 @@ public class HurtsbridgeDisruptionRetrievalLogic {
     @Value("${advanceDaysToCheck}")
     private int advancedDaysToCheck;
 
+    @Value("${metro.trainLine}")
+    private String trainLine;
+
     public List<Disruption> findDisruptions(){
 
         List<Disruption> result = new ArrayList<>();
@@ -36,10 +37,10 @@ public class HurtsbridgeDisruptionRetrievalLogic {
         Optional<RouteResponse> allRoutes = routeService.getAll();
 
         allRoutes.ifPresent(
-            o -> o.Routes.stream().filter(this::isHurtsbridgeLine).findFirst()
+            o -> o.Routes.stream().filter(this::isTargetTrainline).findFirst()
                 .ifPresent(
-                    hurtbridgeRoute ->
-                        disruptionService.getDisruption(hurtbridgeRoute.RouteId)
+                    targetRoute ->
+                        disruptionService.getDisruption(targetRoute.RouteId)
                             .ifPresent( allDisruptions ->
                                 allDisruptions.disruptions.MetroTrain.stream().filter(this::isDisruptionHappeningInDays).collect(Collectors.toCollection(() -> result))
                             )
@@ -49,8 +50,8 @@ public class HurtsbridgeDisruptionRetrievalLogic {
         return result;
     }
 
-    private boolean isHurtsbridgeLine(Route route){
-        return HURTSBRIDGE_LINE.equalsIgnoreCase(route.RouteName);
+    private boolean isTargetTrainline(Route route){
+        return trainLine.equalsIgnoreCase(route.RouteName);
     }
 
 
