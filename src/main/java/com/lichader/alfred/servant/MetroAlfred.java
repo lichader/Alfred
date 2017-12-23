@@ -41,7 +41,9 @@ public class MetroAlfred {
         sb.append("Disruption: ").append(disruption.Description).append(LINE_BREAK);
         sb.append("Status: ").append(disruption.Status).append(LINE_BREAK);
         sb.append("Type: ").append(disruption.Type).append(LINE_BREAK);
-        sb.append("From " + disruption.FromDate + " to " + disruption.ToDate);
+        sb.append(
+            "From " + disruption.FromDate != null ? disruption.FromDate.toLocalDateTime() : "N/A"
+                + " to " + disruption.ToDate != null ? disruption.ToDate.toLocalDateTime() : "N/A");
 
         messageBot.send(sb.toString());
     }

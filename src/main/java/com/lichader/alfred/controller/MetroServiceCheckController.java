@@ -16,7 +16,7 @@ public class MetroServiceCheckController {
     @Autowired
     private TrainlineDisruptionRetrievalLogic logic;
 
-    @RequestMapping("disruption/hurtsbridge")
+    @RequestMapping("disruptions")
     @GetMapping
     public List<Disruption> get(){
         return logic.findDisruptions();
