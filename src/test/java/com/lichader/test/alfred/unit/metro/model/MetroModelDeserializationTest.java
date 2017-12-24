@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 public class MetroModelDeserializationTest {
 
     private final ZoneId DEFAULT_TIME_ZONE = ZoneId.of("UTC");
-    private String disruptionResponseFilePath = "response/hurtsbridge-disruption-response.json";
+    private String disruptionResponseFilePath = "response/disruption-response.json";
 
     @Test
     public void deserializeDisruptionResponse_ExpectSuccessful() throws IOException {
