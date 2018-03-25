@@ -2,10 +2,9 @@ package com.lichader.alfred.controller;
 
 import com.lichader.alfred.logic.TrainlineDisruptionRetrievalLogic;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
+import com.lichader.alfred.servant.MetroAlfred;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,10 +15,16 @@ public class MetroServiceCheckController {
     @Autowired
     private TrainlineDisruptionRetrievalLogic logic;
 
-    @RequestMapping("disruptions")
-    @GetMapping
+    @Autowired
+    private MetroAlfred alfred;
+
+    @RequestMapping(value = "disruptions", method = RequestMethod.GET)
     public List<Disruption> get(){
         return logic.findDisruptions();
     }
 
+    @RequestMapping(value = "disruptions", method = RequestMethod.POST)
+    public void sendMessageToSlack(){
+        alfred.checkDisruption();
+    }
 }
