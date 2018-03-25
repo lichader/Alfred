@@ -15,7 +15,7 @@ public class MetroAlfred {
 
     private static final String SCHEDULE_12AM_DAILY = "0 0 0 * * *";
 
-    private static final String LINE_BREAK = "%0A"; // url encoded \n
+    public static final String LINE_BREAK = "%0A"; // url encoded \n
 
 
     @Autowired
@@ -41,9 +41,8 @@ public class MetroAlfred {
         sb.append("Disruption: ").append(disruption.Description).append(LINE_BREAK);
         sb.append("Status: ").append(disruption.Status).append(LINE_BREAK);
         sb.append("Type: ").append(disruption.Type).append(LINE_BREAK);
-        sb.append(
-            "From " + disruption.FromDate != null ? disruption.FromDate.toLocalDateTime() : "N/A"
-                + " to " + disruption.ToDate != null ? disruption.ToDate.toLocalDateTime() : "N/A");
+        sb.append("From ").append(disruption.FromDate != null ? disruption.FromDate.toLocalDateTime() : "N/A")
+            .append(" to ").append(disruption.ToDate != null ? disruption.ToDate.toLocalDateTime() : "N/A");
 
         messageBot.send(sb.toString());
     }

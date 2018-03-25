@@ -6,7 +6,9 @@ import com.lichader.alfred.metroapi.v3.model.*;
 import com.lichader.alfred.slack.MessageBot;
 import com.lichader.alfred.servant.MetroAlfred;
 import com.lichader.test.alfred.AbstractSpringBootTestBase;
+import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -39,10 +41,19 @@ public class MetroAlfredTest extends AbstractSpringBootTestBase{
     @Test
     public void checkDisruption_TwoDisruptions_ExpectTwoMessageSent(){
         given(this.routeService.getAll()).willReturn(Optional.of(mockRoutes()));
-        given(this.disruptionService.getDisruption(expectedRouteId)).willReturn(Optional.of(mockDisruptions()));
+        DisruptionsResponse disruptionsResponse = mockDisruptions();
+        given(this.disruptionService.getDisruption(expectedRouteId)).willReturn(Optional.of(disruptionsResponse));
 
         metroAlfred.checkDisruption();
-        then(this.messageBot).should(times(1)).send(Mockito.anyString());
+
+        ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+        then(this.messageBot).should(times(1)).send(argument.capture());
+
+        String expectedMessageContent = "Disruption: Test disruption 2%0AStatus: planned%0AType: test%0AFrom "
+            + disruptionsResponse.disruptions.MetroTrain.get(1).FromDate.toLocalDateTime()
+            + " to " + disruptionsResponse.disruptions.MetroTrain.get(1).ToDate.toLocalDateTime();
+
+        Assert.assertEquals(expectedMessageContent, argument.getValue());
     }
 
     private RouteResponse mockRoutes(){
