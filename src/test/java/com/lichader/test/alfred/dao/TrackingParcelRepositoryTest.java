@@ -1,6 +1,5 @@
 package com.lichader.test.alfred.dao;
 
-import com.lichader.alfred.db.dao.TrackingHistoryRepository;
 import com.lichader.alfred.db.dao.TrackingParcelRepository;
 import com.lichader.alfred.db.model.tracking.TrackingHistory;
 import com.lichader.alfred.db.model.tracking.TrackingParcel;
@@ -25,9 +24,6 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
 
     @Autowired
     private TrackingParcelRepository trackingParcelRepository;
-
-    @Autowired
-    private TrackingHistoryRepository trackingHistoryRepository;
 
     @Before
     public void setupData(){
