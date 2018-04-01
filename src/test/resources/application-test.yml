@@ -1,13 +1,27 @@
 spring:
   profiles: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:dao;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+flyway:
+  enabled: false
 
 metro:
   api:
     devid: dummy
     key: dummy
+  trainLine: South Morang
 
 slack:
   token: dummy
   postMessage:
     url: https://slack.com/api/chat.postMessage
     channel: dummy
+
+advanceDaysToCheck: 3
