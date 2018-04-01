@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 public class BSETrackingPageParser {
 
+    private final static String CJK_SPACE = "[ |　]";
+    private final static String ENG_SPACE = " ";
+
     public List<BSETrack> extractTrackingInfo(Document document) throws IOException{
 
         Elements results = document.select("#oTHtable tr");
@@ -32,8 +35,8 @@ public class BSETrackingPageParser {
 
             String timeText = tds.get(0).text();
             time = LocalDateTime.parse(timeText, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            location = tds.get(1).text().replaceAll("[ |　]", " ").trim();
-            status = tds.get(2).text().trim().replaceAll("　","").trim();
+            location = tds.get(1).text().replaceAll(CJK_SPACE, ENG_SPACE).trim();
+            status = tds.get(2).text().trim().replaceAll(CJK_SPACE,ENG_SPACE).trim();
         }
 
         public LocalDateTime getTime() {
