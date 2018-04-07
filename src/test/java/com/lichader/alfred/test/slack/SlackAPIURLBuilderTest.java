@@ -1,4 +1,4 @@
-package com.lichader.test.alfred.unit.slack;
+package com.lichader.alfred.test.slack;
 
 import com.lichader.alfred.slack.SlackAPIURLBuilder;
 import org.junit.Assert;

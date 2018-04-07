@@ -1,9 +1,9 @@
-package com.lichader.test.alfred.dao;
+package com.lichader.alfred.test.dao;
 
 import com.lichader.alfred.db.dao.TrackingParcelRepository;
 import com.lichader.alfred.db.model.tracking.TrackingHistory;
 import com.lichader.alfred.db.model.tracking.TrackingParcel;
-import com.lichader.test.alfred.AbstractSpringBootTestBase;
+import com.lichader.alfred.test.AbstractSpringBootTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,22 +1,26 @@
-package com.lichader.alfred.db.model.tracking;
+package com.lichader.alfred.controller.tracking.model;
 
-import com.lichader.alfred.db.model.BaseEntity;
+import com.lichader.alfred.db.model.tracking.TrackingHistory;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "tracking_history")
-public class TrackingHistory extends BaseEntity {
-
-    @Column
+public class TrackingHistoryWebModel {
     private LocalDateTime time;
-
-    @Column
     private String location;
-
-    @Column
     private String status;
+
+    private TrackingHistoryWebModel(){
+
+    }
+
+    public static TrackingHistoryWebModel build(TrackingHistory trackingHistory){
+        TrackingHistoryWebModel toRet = new TrackingHistoryWebModel();
+        toRet.setTime(trackingHistory.getTime());
+        toRet.setLocation(trackingHistory.getLocation());
+        toRet.setStatus(trackingHistory.getStatus());
+
+        return  toRet;
+    }
 
     public LocalDateTime getTime() {
         return time;

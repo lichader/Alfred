@@ -1,4 +1,4 @@
-package com.lichader.test.alfred.unit.metro.model;
+package com.lichader.alfred.test.metro.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lichader.alfred.metroapi.v3.model.Disruption;

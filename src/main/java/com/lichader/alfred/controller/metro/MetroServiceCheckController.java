@@ -1,4 +1,4 @@
-package com.lichader.alfred.controller;
+package com.lichader.alfred.controller.metro;
 
 import com.lichader.alfred.logic.TrainlineDisruptionRetrievalLogic;
 import com.lichader.alfred.metroapi.v3.model.Disruption;

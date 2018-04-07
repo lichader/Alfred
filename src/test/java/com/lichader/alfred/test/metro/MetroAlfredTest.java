@@ -1,11 +1,11 @@
-package com.lichader.test.alfred.unit.metro;
+package com.lichader.alfred.test.metro;
 
 import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.RouteService;
 import com.lichader.alfred.metroapi.v3.model.*;
 import com.lichader.alfred.slack.MessageBot;
 import com.lichader.alfred.servant.MetroAlfred;
-import com.lichader.test.alfred.AbstractSpringBootTestBase;
+import com.lichader.alfred.test.AbstractSpringBootTestBase;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 @TestPropertySource(properties = {"advanceDaysToCheck=3", "metro.trainLine=South Morang"})
-public class MetroAlfredTest extends AbstractSpringBootTestBase{
+public class MetroAlfredTest extends AbstractSpringBootTestBase {
 
     @MockBean
     private RouteService routeService;

@@ -1,4 +1,4 @@
-package com.lichader.test.alfred.unit.metro;
+package com.lichader.alfred.test.metro;
 
 import com.lichader.alfred.metroapi.v3.MetroServiceURLBuilder;
 import com.lichader.alfred.metroapi.v3.RouteTypeService;
