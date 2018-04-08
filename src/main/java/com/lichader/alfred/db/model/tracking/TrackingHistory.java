@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tracking_history", schema = "alfred")
+@Table(name = "tracking_history")
 public class TrackingHistory extends BaseEntity {
 
     @Column

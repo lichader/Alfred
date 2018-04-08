@@ -6,7 +6,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/mydb?useSSL=false
+    url: jdbc:postgresql://localhost:5432/mydb?currentSchema=myschema
     username: lichader
     password:
   jpa:
