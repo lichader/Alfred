@@ -17,8 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MetroServiceCheckController.class)
@@ -42,13 +45,20 @@ public class MetroServiceCheckControllerTest extends AbstractControllerTest{
         disruptions.add(disruption);
 
         when(logic.findDisruptions()).thenReturn(disruptions);
-        mockMvc.perform(get("api/metro/disruptions")).andExpect(status().isOk());
+        MvcResult result = mockMvc.perform(get("/api/metro/disruptions")).andExpect(status().isOk()).andReturn();
 
-//        String content = result.getResponse().getContentAsString();
-//        ObjectMapper mapper = SerializationHelperFactory.getHelper();
-//        List serialisedResult = mapper.readValue(content, List.class);
-//
-//        assertEquals(1, serialisedResult.size());
+        String content = result.getResponse().getContentAsString();
+        ObjectMapper mapper = SerializationHelperFactory.getHelper();
+        List serialisedResult = mapper.readValue(content, List.class);
+
+        assertEquals(1, serialisedResult.size());
+    }
+
+    @Test
+    public void triggerSendMessage_ExpectAlfredCalled() throws Exception {
+        mockMvc.perform(post("/api/metro/disruptions")).andExpect(status().isOk()).andReturn();
+
+        verify(metroAlfred, times(1)).checkDisruption();
     }
 
 }

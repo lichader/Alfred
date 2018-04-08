@@ -21,12 +21,13 @@ public class MetroServiceCheckController {
     private MetroAlfred alfred;
 
     @RequestMapping(value = "disruptions", method = RequestMethod.GET)
-    public ResponseEntity<List<Disruption>> get(){
+    public ResponseEntity<List<Disruption>> getAllDisruptions(){
         return new ResponseEntity<>(logic.findDisruptions(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "disruptions", method = RequestMethod.POST)
-    public void sendMessageToSlack(){
+    public ResponseEntity<String> sendMessageToSlack(){
         alfred.checkDisruption();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
