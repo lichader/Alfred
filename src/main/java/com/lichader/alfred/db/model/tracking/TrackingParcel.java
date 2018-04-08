@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tracking_parcel")
+@Table(name = "tracking_parcel", schema = "alfred")
 public class TrackingParcel extends BaseEntity {
 
     @Column(name = "tracking_no", unique = true, nullable = false)
