@@ -44,9 +44,9 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
     }
 
     @Test
-    public void findParcelByTrackingNo_ExpectOneReturn(){
+    public void findParcelByTrackingNoInLowerCase_ExpectOneReturn(){
 
-        List<TrackingParcel> result = trackingParcelRepository.findByTrackingNo(trackingNo);
+        List<TrackingParcel> result = trackingParcelRepository.findByTrackingNoIgnoreCase(trackingNo.toLowerCase());
 
         assertEquals(1, result.size());
 

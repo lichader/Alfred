@@ -20,7 +20,7 @@ public class TrackingServiceController {
 
     @RequestMapping(value="{trackingNo}", method = RequestMethod.GET)
     public ResponseEntity<TrackingParcelWebModel> getParcel(@PathVariable("trackingNo") String trackingNo){
-        List<TrackingParcel> result = trackingParcelRepository.findByTrackingNo(trackingNo);
+        List<TrackingParcel> result = trackingParcelRepository.findByTrackingNoIgnoreCase(trackingNo);
 
         if (result.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -30,11 +30,13 @@ public class TrackingServiceController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, consumes = {"application/json"})
     @ResponseStatus(value = HttpStatus.CREATED)
     public void createNewTrackingParcel(@RequestBody CreateNewTrackingsWebRequest request){
-//        TrackingParcel newParcel = new TrackingParcel();
-//        newParcel.setTrackingNo(request.getTrackingNo());
-//        newParcel.setDestination();
+        TrackingParcel newParcel = new TrackingParcel();
+        newParcel.setTrackingNo(request.getTrackingNo());
+        newParcel.setDestination(request.getDestination());
+
+        trackingParcelRepository.save(newParcel);
     }
 }

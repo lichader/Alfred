@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TrackingParcelRepository extends CrudRepository<TrackingParcel, Long> {
-    List<TrackingParcel> findByTrackingNo(String trackingNo);
+    List<TrackingParcel> findByTrackingNoIgnoreCase(String trackingNo);
 }
