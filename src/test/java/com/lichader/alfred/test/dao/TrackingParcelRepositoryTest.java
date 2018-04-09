@@ -41,6 +41,12 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
         trackingParcel.getHistories().add(trackingHistory);
 
         trackingParcelRepository.save(trackingParcel);
+
+        trackingParcel = new TrackingParcel();
+        trackingParcel.setTrackingNo(trackingNo + "2");
+        trackingParcel.setDestination(destination);
+        trackingParcel.setDelivered(true);
+        trackingParcelRepository.save(trackingParcel);
     }
 
     @Test
@@ -63,6 +69,14 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
         assertEquals(status, history.getStatus());
         assertNotNull(history.getCreatedDate());
         assertNotNull(history.getLastModifiedDate());
+    }
+
+    @Test
+    public void findInProgress_ExpectOneReturn(){
+        List<TrackingParcel> result = trackingParcelRepository.findByDeliveredFalse();
+
+        assertEquals(1, result.size());
+        assertEquals(trackingNo , result.get(0).getTrackingNo());
     }
 
 }

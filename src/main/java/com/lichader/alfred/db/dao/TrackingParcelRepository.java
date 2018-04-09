@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TrackingParcelRepository extends CrudRepository<TrackingParcel, Long> {
     List<TrackingParcel> findByTrackingNoIgnoreCase(String trackingNo);
+
+    List<TrackingParcel> findByDeliveredFalse();
 }
