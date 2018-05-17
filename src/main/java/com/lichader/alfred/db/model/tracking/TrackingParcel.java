@@ -13,11 +13,8 @@ public class TrackingParcel extends BaseEntity {
     @Column(name = "tracking_no", unique = true, nullable = false)
     private String trackingNo;
 
-    @Column(name = "destination", nullable = false)
-    private String destination;
-
-    @Column(name = "delivered", nullable = false)
-    private boolean delivered;
+    @OneToOne(fetch = FetchType.EAGER)
+    private TrackingStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // TODO: eager loading can be a performance issue
     @JoinColumn(name = "parcel_id")
@@ -31,20 +28,12 @@ public class TrackingParcel extends BaseEntity {
         this.trackingNo = trackingNo;
     }
 
-    public String getDestination() {
-        return destination;
+    public TrackingStatus getStatus() {
+        return status;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
+    public void setStatus(TrackingStatus status) {
+        this.status = status;
     }
 
     public List<TrackingHistory> getHistories() {

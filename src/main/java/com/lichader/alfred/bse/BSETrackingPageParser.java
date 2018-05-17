@@ -1,8 +1,9 @@
-package com.lichader.alfred.util.parser;
+package com.lichader.alfred.bse;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class BSETrackingPageParser {
 
     private final static String CJK_SPACE = "[ |　]";

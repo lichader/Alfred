@@ -1,8 +1,10 @@
 package com.lichader.alfred.test.dao;
 
 import com.lichader.alfred.db.dao.TrackingParcelRepository;
+import com.lichader.alfred.db.dao.TrackingStatusRepository;
 import com.lichader.alfred.db.model.tracking.TrackingHistory;
 import com.lichader.alfred.db.model.tracking.TrackingParcel;
+import com.lichader.alfred.db.model.tracking.TrackingStatus;
 import com.lichader.alfred.test.AbstractSpringBootTestBase;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,20 +21,30 @@ import static org.junit.Assert.assertNotNull;
 public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
 
     private String trackingNo = "TEST1234";
-    private String destination = "CHINA";
 
     private String location = "Hunan";
     private String status = "In Progress";
 
+    private TrackingStatus deliveredStatus;
+    private TrackingStatus inFlightStatus;
+
     @Autowired
     private TrackingParcelRepository trackingParcelRepository;
 
+    @Autowired
+    private TrackingStatusRepository trackingStatusRepository;
+
     @Before
     public void setupData(){
+        deliveredStatus = new TrackingStatus(1, "Delivered");
+        deliveredStatus = trackingStatusRepository.save(deliveredStatus);
+
+        inFlightStatus= new TrackingStatus(2, "In progress");
+        inFlightStatus = trackingStatusRepository.save(inFlightStatus);
+
         TrackingParcel trackingParcel = new TrackingParcel();
         trackingParcel.setTrackingNo(trackingNo);
-        trackingParcel.setDestination(destination);
-        trackingParcel.setDelivered(false);
+        trackingParcel.setStatus(inFlightStatus);
 
         TrackingHistory trackingHistory = new TrackingHistory();
         trackingHistory.setTime(LocalDateTime.now());
@@ -44,22 +56,18 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
 
         trackingParcel = new TrackingParcel();
         trackingParcel.setTrackingNo(trackingNo + "2");
-        trackingParcel.setDestination(destination);
-        trackingParcel.setDelivered(true);
+        trackingParcel.setStatus(deliveredStatus);
         trackingParcelRepository.save(trackingParcel);
     }
 
     @Test
     public void findParcelByTrackingNoInLowerCase_ExpectOneReturn(){
 
-        List<TrackingParcel> result = trackingParcelRepository.findByTrackingNoIgnoreCase(trackingNo.toLowerCase());
+        TrackingParcel parcel = trackingParcelRepository.findOneByTrackingNoIgnoreCase(trackingNo.toLowerCase());
 
-        assertEquals(1, result.size());
-
-        TrackingParcel parcel = result.get(0);
+        assertNotNull(parcel);
 
         assertEquals(trackingNo, parcel.getTrackingNo());
-        assertEquals(destination, parcel.getDestination());
         assertNotNull(parcel.getCreatedDate());
         assertNotNull(parcel.getLastModifiedDate());
 
@@ -73,7 +81,7 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
 
     @Test
     public void findInProgress_ExpectOneReturn(){
-        List<TrackingParcel> result = trackingParcelRepository.findByDeliveredFalse();
+        List<TrackingParcel> result = trackingParcelRepository.findByStatus(inFlightStatus);
 
         assertEquals(1, result.size());
         assertEquals(trackingNo , result.get(0).getTrackingNo());

@@ -7,13 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class MetroAlfred {
     private final Logger logger = LoggerFactory.getLogger(MetroAlfred.class);
-
-    private static final String SCHEDULE_12AM_DAILY = "0 0 0 * * *";
 
     public static final String LINE_BREAK = "%0A"; // url encoded \n
 
@@ -26,7 +24,7 @@ public class MetroAlfred {
 
 
 
-    @Scheduled(cron = SCHEDULE_12AM_DAILY)
+    @Scheduled(cron = CronSchedules.TWELVE_AM_DAILY)
     public void checkDisruption(){
         logger.info("Start checking disruption");
 

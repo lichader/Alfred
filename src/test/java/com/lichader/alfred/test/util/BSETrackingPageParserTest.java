@@ -1,6 +1,6 @@
 package com.lichader.alfred.test.util;
 
-import com.lichader.alfred.util.parser.BSETrackingPageParser;
+import com.lichader.alfred.bse.BSETrackingPageParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;

@@ -7,14 +7,9 @@ import java.util.stream.Collectors;
 
 public class TrackingParcelWebModel {
     private String trackingNo;
-    private String destination;
-    private boolean delivered;
+    private String status;
 
     private List<TrackingHistoryWebModel> histories;
-
-    public String getTrackingNo() {
-        return trackingNo;
-    }
 
     private TrackingParcelWebModel(){
 
@@ -23,8 +18,7 @@ public class TrackingParcelWebModel {
     public static TrackingParcelWebModel build(TrackingParcel trackingParcel){
         TrackingParcelWebModel toRet = new TrackingParcelWebModel();
         toRet.trackingNo = trackingParcel.getTrackingNo();
-        toRet.destination = trackingParcel.getDestination();
-        toRet.delivered = trackingParcel.isDelivered();
+        toRet.status = trackingParcel.getStatus().getDescription();
         toRet.histories = trackingParcel.getHistories()
             .stream().map(TrackingHistoryWebModel::build)
             .collect(Collectors.toList());
@@ -32,24 +26,19 @@ public class TrackingParcelWebModel {
         return toRet;
     }
 
+    public String getTrackingNo() {
+        return trackingNo;
+    }
     public void setTrackingNo(String trackingNo) {
         this.trackingNo = trackingNo;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<TrackingHistoryWebModel> getHistories() {
