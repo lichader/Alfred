@@ -1,10 +1,11 @@
-package com.lichader.alfred.test.controller;
+package com.lichader.alfred.test.controller.metro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lichader.alfred.controller.metro.MetroServiceCheckController;
 import com.lichader.alfred.logic.TrainlineDisruptionRetrievalLogic;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
 import com.lichader.alfred.servant.MetroAlfred;
+import com.lichader.alfred.test.controller.AbstractControllerTest;
 import com.lichader.alfred.util.SerializationHelperFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MetroServiceCheckController.class)
-public class MetroServiceCheckControllerTest extends AbstractControllerTest{
+public class MetroServiceCheckControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

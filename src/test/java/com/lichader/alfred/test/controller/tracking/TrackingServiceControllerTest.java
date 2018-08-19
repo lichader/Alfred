@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.controller;
+package com.lichader.alfred.test.controller.tracking;
 
 import com.lichader.alfred.controller.tracking.TrackingServiceController;
 import com.lichader.alfred.db.dao.TrackingParcelRepository;
@@ -6,6 +6,7 @@ import com.lichader.alfred.db.dao.TrackingStatusRepository;
 import com.lichader.alfred.db.model.tracking.TrackingHistory;
 import com.lichader.alfred.db.model.tracking.TrackingParcel;
 import com.lichader.alfred.db.model.tracking.TrackingStatus;
+import com.lichader.alfred.test.controller.AbstractControllerTest;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TrackingServiceController.class)
-public class TrackingServiceControllerTest extends AbstractControllerTest{
+public class TrackingServiceControllerTest extends AbstractControllerTest {
 
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a");
 

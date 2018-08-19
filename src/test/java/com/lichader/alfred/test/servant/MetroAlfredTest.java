@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.metro;
+package com.lichader.alfred.test.servant;
 
 import com.lichader.alfred.metroapi.v3.DisruptionService;
 import com.lichader.alfred.metroapi.v3.RouteService;

@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.metro.model;
+package com.lichader.alfred.test.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lichader.alfred.metroapi.v3.model.Disruption;
@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MetroModelDeserializationTest {
+public class SerializationHelperFactoryTest {
 
     private final ZoneId DEFAULT_TIME_ZONE = ZoneId.of("UTC");
     private String disruptionResponseFilePath = "response/disruption-response.json";

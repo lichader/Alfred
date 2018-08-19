@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.dao;
+package com.lichader.alfred.test.db.dao;
 
 import com.lichader.alfred.db.dao.TrackingParcelRepository;
 import com.lichader.alfred.db.dao.TrackingStatusRepository;
@@ -85,6 +85,14 @@ public class TrackingParcelRepositoryTest extends AbstractSpringBootTestBase {
 
         assertEquals(1, result.size());
         assertEquals(trackingNo , result.get(0).getTrackingNo());
+    }
+
+    @Test
+    public void findNotInProgress_ExpectOneREturn(){
+        List<TrackingParcel> result = trackingParcelRepository.findByStatusNot(inFlightStatus);
+
+        assertEquals(1, result.size());
+        assertEquals(trackingNo + "2", result.get(0).getTrackingNo());
     }
 
 }

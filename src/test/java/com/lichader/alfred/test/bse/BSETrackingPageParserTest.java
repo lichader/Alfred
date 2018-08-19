@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.util;
+package com.lichader.alfred.test.bse;
 
 import com.lichader.alfred.bse.BSETrackingPageParser;
 import org.jsoup.Jsoup;

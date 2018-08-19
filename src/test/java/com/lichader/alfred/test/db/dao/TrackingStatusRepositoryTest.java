@@ -1,4 +1,4 @@
-package com.lichader.alfred.test.dao;
+package com.lichader.alfred.test.db.dao;
 
 import com.lichader.alfred.db.dao.TrackingStatusRepository;
 import com.lichader.alfred.db.model.tracking.TrackingStatus;
